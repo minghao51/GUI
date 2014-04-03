@@ -1,0 +1,47 @@
+GUI revision history
+Note, all GUI require otsu.m to function
+Note, GUIv3 required sort_na to read through some folders due to the unreasonable names they have.
+* demands fix or attention still
+
+23/2/14 GUIv1 
+Loading, Cropping, Otsu are working, though I'm achieving to tidying. To eliminate the use of global variables.
+Change of global parameters Into  
+> dicomlist, data, I1, I2 
+> handles.dicomlist , handles.data, handles.I1, handles.I2
+couldn't get any other work.data to be shared along the various function for some reasons. Hence I used handles.xxx for everything atm
+
+24/2/14 GUIv2
+PostResult are working as intended, implemented
+Depicting frames Number on the static textbox
+Updating centroid location on each plot with sliders
+Considering removing the cropped portion of image, as they are just taking up space, and I could use a static textbox to display feedback or error msg.
+
+4/3/14 -26/2/14 GUIv3 
+SCRAPPECD - Remove the cropped image display to make room for a static textbox
+>Log Panel - added a Log Panel and static textbox to display exceptions and error
+>Error Check - Implemented an error clipping check that is based on a the range of displacement of centroid, Having different value for diaphragm and tumour as their motion are quite different
+>File Loader - It's now able to load all kinds of file names, while ignoring those that doesn't share the same first letter
+>Sort_na - Using a code I found online, sort those the dicom files to ensure I have the correct order. As their filename may not follow a easy readable format.
+>Custom Threshold  - Functional now at Threshold method 3, seems very instable, very dependence on the impixel value.
+>Custom Otsu - Applying Otsu method only at the cropped image, seems much more accurate than Applying Even-Otsu, as it is able to circulate through the very high intensity of heart area in the dicom image.
+>DicomInfo - handles.dicominfo to read the temporal and spatial data, as we only use pixel location and N frame atm
+>Probability density Map (PDF, PDM ) output as a plot at the end with contourd
+>Volume of tumour output at the end
+>Crop coordinates, threshold region are now save in 'predata.txt' and it will be saved with the corresponding folder with the image
+the problem will also read for predata and cropped region if the 'predata.txt' is available
+>Seperated data and dataT, ie the original image data and the thresholded data, though it seems I can't just threshold twice still.*
+>Overlay of Tracked region on the original image to access accuracy.
+> Change, Otsu > Threshold for more accurate portray of actions
+And some others that I couldn't remember
+
+
+GUI
+cor pat require bwareopen ~ 25 to track the diaphragm consistently
+sag pat require bwareaopen 100 to track the diaphragm, but didn't work for other, odd
+It also doesn't display the contoured region, likely an error due to not printing properly?
+
+Yet to implement
+> Output of time, displacement, Ctumour-x, Ctumour-y, Diaphragm-y, Volume of Tumour into a text file
+> PDF output in Dicom, would require accessment of reproducibility of PDF before this I guess
+> Perhaps another code/function to access the reproducibility of PDF
+> Remove the cropping cordinates in the GUI, as it has little use.
